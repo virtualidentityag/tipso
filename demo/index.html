@@ -14,7 +14,7 @@
 	<script type="text/template" id="template_sample">
 		This is a test <%= name %>.
 	</script>
-	<script src="../src/tipso.min.js"></script>
+	<script src="../src/tipso.js"></script>
 
 	<!--[if lt IE 9]>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -213,6 +213,15 @@
 			jQuery('.animationOut').on('change', function(e){
 				var $this = jQuery(this);
 				jQuery('.animate').tipso('update', 'animationOut', $this.val());
+			});
+
+			jQuery('.manual-position-tipso').tipso({
+				autoPosition: false,
+				useTitle: true,
+				onPositioned: function($el, $el1, $el2){
+					$el2.tipso_bubble.css('left', '200px');
+					$el2.tipso_bubble.css('top', '6800px');
+				}
 			});
 
 		});
@@ -861,11 +870,15 @@ jQuery('.img-tipso').tipso({
 					<pre><span>Code Example</span>
 <code>
 jQuery('.callback-tipso').tipso({
-  onShow : function(){
+	autoPosition: false,
+	onShow : function(){
     alert('Tipso Showed');
   },
   onHide: function(){
     alert('Tipso Hidden');
+  },
+  onPositioned: function(trigger, tipso) {
+	alert('Tipso Positioned');
   }
 });
 </code>

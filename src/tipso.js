@@ -46,7 +46,8 @@
       templateEngineFunc: null,         //A function that compiles and renders the content
       onBeforeShow      : null,
       onShow            : null,
-      onHide            : null
+      onHide            : null,
+      onPositioned      : null
     };
 
   function Plugin(element, options) {
@@ -975,6 +976,10 @@
       reposition(obj);
     }
 
+
+    if ($.isFunction(obj.settings.onPositioned)) {
+      obj.settings.onPositioned(obj.$element,obj.$element, obj);
+    }
   }
   $[pluginName] = $.fn[pluginName] = function(options) {
     var args = arguments;
