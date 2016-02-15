@@ -416,7 +416,7 @@
   function reposition(thisthat) {
 
     if ($.isFunction(thisthat.settings.onBeforePositioned)) {
-      thisthat.settings.onBeforePositioned(obj);
+      thisthat.settings.onBeforePositioned(thisthat);
     }
 
     if(thisthat.settings.manualPositioning === true) {
