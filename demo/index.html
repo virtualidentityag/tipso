@@ -162,11 +162,18 @@
 			// Calback Tipso
 			jQuery('.callback-tipso').tipso({
 				useTitle: true,
+				manualPositioning: true,
 				onShow : function(){
 			    	alert('Tipso Showed');
 			  	},
 				onHide: function(){
 					alert('Tipso Hidden');
+				},
+				onAfterPositioned: function(trigger, tipso) {
+					alert('Tipso after Positioned');
+				},
+				onBeforePositioned: function(trigger, tipso) {
+					alert('Tipso before Positioned');
 				}
 			});
 
@@ -214,16 +221,6 @@
 				var $this = jQuery(this);
 				jQuery('.animate').tipso('update', 'animationOut', $this.val());
 			});
-
-			jQuery('.manual-position-tipso').tipso({
-				autoPosition: false,
-				useTitle: true,
-				onPositioned: function($el, $el1, $el2){
-					$el2.tipso_bubble.css('left', '200px');
-					$el2.tipso_bubble.css('top', '6800px');
-				}
-			});
-
 		});
 		jQuery(window).load(function(){
 			// Show Tipso on Load
@@ -870,15 +867,18 @@ jQuery('.img-tipso').tipso({
 					<pre><span>Code Example</span>
 <code>
 jQuery('.callback-tipso').tipso({
-	autoPosition: false,
+	manualPositioning: true,
 	onShow : function(){
     alert('Tipso Showed');
   },
   onHide: function(){
     alert('Tipso Hidden');
   },
-  onPositioned: function(trigger, tipso) {
-	alert('Tipso Positioned');
+  onAfterPositioned: function(trigger, tipso) {
+	alert('Tipso after Positioned');
+  },
+  onBeforePositioned: function(trigger, tipso) {
+	alert('Tipso before Positioned');
   }
 });
 </code>

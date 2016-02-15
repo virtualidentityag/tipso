@@ -47,7 +47,9 @@
       onBeforeShow      : null,
       onShow            : null,
       onHide            : null,
-      onPositioned      : null
+      onAfterPositioned : null,
+      onBeforePositioned: null,
+      manualPositioning : false,
     };
 
   function Plugin(element, options) {
@@ -412,6 +414,15 @@
   }
 
   function reposition(thisthat) {
+
+    if ($.isFunction(thisthat.settings.onBeforePositioned)) {
+      thisthat.settings.onBeforePositioned(obj);
+    }
+
+    if(thisthat.settings.manualPositioning === true) {
+      return;
+    }
+
     var tipso_bubble = thisthat.tooltip(),
       $e = thisthat.$element,
       obj = thisthat,
@@ -977,8 +988,8 @@
     }
 
 
-    if ($.isFunction(obj.settings.onPositioned)) {
-      obj.settings.onPositioned(obj.$element,obj.$element, obj);
+    if ($.isFunction(obj.settings.onAfterPositioned)) {
+      obj.settings.onAfterPositioned(obj);
     }
   }
   $[pluginName] = $.fn[pluginName] = function(options) {
