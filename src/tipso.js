@@ -166,6 +166,11 @@
       }
       return this.tipso_bubble;
     },
+    tipsoResizeHandler: function (e) {
+      var obj = e.data.obj;
+      obj.settings.position = obj.settings.preferedPosition;
+      reposition(obj);
+    },
     show: function() {
       var tipso_bubble = this.tooltip(),
         obj = this,
@@ -212,10 +217,7 @@
         tipso_bubble.find('.tipso_title').html(obj.titleContent());
         reposition(obj);
 
-        $win.on('resize' + '.' + pluginName, function tipsoResizeHandler () {
-            obj.settings.position = obj.settings.preferedPosition;
-            reposition(obj);
-        });
+        $win.on('resize' + '.' + pluginName, { obj : obj }, obj.tipsoResizeHandler);
 
         window.clearTimeout(obj.timeout);
         obj.timeout = null;
@@ -242,7 +244,7 @@
               if ($.isFunction(obj.settings.onShow)) {
                 obj.settings.onShow(obj.$element, obj.element, obj);
               }
-              $win.off('resize' + '.' + pluginName, null, 'tipsoResizeHandler');
+              $win.off('resize' + '.' + pluginName, null, obj.tipsoResizeHandler);
             });
           }
         }, obj.settings.delay);
@@ -271,7 +273,7 @@
                 obj.settings.onHide(obj.$element, obj.element, obj);
               }
               obj.mode = 'hide';
-              $win.off('resize' + '.' + pluginName, null, 'tipsoResizeHandler');
+              $win.off('resize' + '.' + pluginName, null, obj.tipsoResizeHandler);
             });
           } else {
             tipso_bubble.stop(true, true)
@@ -284,7 +286,7 @@
                 obj.settings.onHide(obj.$element, obj.element, obj);
               }
               obj.mode = 'hide';
-              $win.off('resize' + '.' + pluginName, null, 'tipsoResizeHandler');
+              $win.off('resize' + '.' + pluginName, null, obj.tipsoResizeHandler);
             });
           }
         }
@@ -298,7 +300,7 @@
         $win = this.win,
         $doc = this.doc;
       $e.off('.' + pluginName);
-      $win.off('resize' + '.' + pluginName, null, 'tipsoResizeHandler');
+      $win.off('resize' + '.' + pluginName, null, this.tipsoResizeHandler);
       $e.removeData(pluginName);
       $e.removeClass('tipso_style').attr('title', this._title);
     },
