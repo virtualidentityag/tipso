@@ -49,7 +49,7 @@
       onHide            : null,
       onAfterPositioned : null,
       onBeforePositioned: null,
-      manualPositioning : false,
+      manualPositioning : false
     };
 
   function Plugin(element, options) {
@@ -176,6 +176,9 @@
         obj = this,
         $win = this.win;
 
+        // cache obj
+        this.obj = obj;
+
       if (obj.settings.showArrow === false) {
           tipso_bubble.find(".tipso_arrow").hide();
       }
@@ -300,7 +303,7 @@
         $win = this.win,
         $doc = this.doc;
       $e.off('.' + pluginName);
-      $win.off('resize' + '.' + pluginName, null, this.tipsoResizeHandler);
+      $win.off('resize' + '.' + pluginName, {obj: this.obj}, this.tipsoResizeHandler);
       $e.removeData(pluginName);
       $e.removeClass('tipso_style').attr('title', this._title);
     },
